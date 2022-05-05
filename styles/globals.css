@@ -16,6 +16,14 @@
 /* for custom classes */
 @layer components {
   .headerLink {
-    @apply cursor-pointer text-sm font-light text-[#e5e5e5] transition duration-[400] hover:text-[#b3b3b3];
+    @apply cursor-pointer text-sm font-normal text-[#e5e5e5] transition duration-[400] hover:text-[#b3b3b3] lg:text-lg;
+  }
+
+  .bannerButton {
+    @apply flex items-center gap-x-2 rounded px-3 py-1.5 text-sm font-semibold transition duration-[0.4] hover:opacity-75 md:px-5 md:text-base;
+  }
+
+  .text-shadow {
+    text-shadow: 0 4px 10px #000;
   }
 }
