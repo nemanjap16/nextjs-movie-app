@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Banner from '../components/Banner'
 import Header from '../components/Header'
+import Row from '../components/Row'
 import { Movie } from '../typings'
 import requests from '../utils/requests'
 
@@ -26,22 +27,22 @@ const Home = ({
   documentaries,
 }: Props) => {
   return (
-    <div className="relative h-screen bg-gradient-to-b from-gray-900/10 to-[#010511] lg:h-[140vh]">
+    <div className="relative h-screen  bg-gradient-to-b lg:h-[140vh]">
       <Head>
         <title>Movie App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="relative pl-4 pr-4 pb-24 lg:space-y-24 lg:pl-16">
+      <main className="relative overflow-x-hidden pl-4 pr-4 pb-24 lg:space-y-24 lg:pl-16">
         <Banner netflixOriginals={netflixOriginals} />
-        <section>
-          {/* row */}
-          {/* row */}
-          {/* row */}
-          {/* row */}
-          {/* row */}
-          {/* row */}
-          {/* row */}
+        <section className="space-y-10 overflow-x-hidden scrollbar-hide">
+          <Row title={'Trending Now'} movies={trendingNow} />
+          <Row title={'Top Rated'} movies={topRated} />
+          <Row title={'Actions Movies'} movies={actionMovies} />
+          <Row title={'Horror Movies'} movies={horrorMovies} />
+          <Row title={'Comedy Movies'} movies={comedyMovies} />
+          <Row title={'Romance Movies'} movies={romanceMovies} />
+          <Row title={'Documentaries'} movies={documentaries} />
         </section>
       </main>
       {/* modal */}

@@ -16,9 +16,9 @@ const Banner = ({ netflixOriginals }: Props) => {
       netflixOriginals[Math.floor(Math.random() * netflixOriginals.length)]
     )
 
-    // return () => {
-    //   setMovie(null)
-    // }
+    return () => {
+      setMovie(null)
+    }
   }, [netflixOriginals])
 
   return (
