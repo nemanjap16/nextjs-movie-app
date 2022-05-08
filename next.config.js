@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+
+const withTM = require('next-transpile-modules')(['recoil'])
+
+module.exports = withTM({
   reactStrictMode: true,
   images: {
     domains: ['image.tmdb.org', 'rb.gy'],
   },
-}
+})

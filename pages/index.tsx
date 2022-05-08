@@ -31,15 +31,12 @@ const Home = ({
   documentaries,
 }: Props) => {
   const { user, loading } = useAuth()
-  // const subscription = useSubscription(user)
   const showModal = useRecoilValue(modalState)
   const movie = useRecoilValue(movieState)
   // const list = useList(user?.uid)
 
-  // if (loading || subscription === null) return null
   if (loading) return null
 
-  // if (!subscription) return <Plans products={products} />
   return (
     <div
       className={`relative h-screen  bg-gradient-to-b lg:h-[140vh] ${
@@ -71,13 +68,6 @@ const Home = ({
 export default Home
 
 export const getServerSideProps = async () => {
-  //   const products = await getProducts(payments, {
-  //     includePrices: true,
-  //     activeOnly: true,
-  //   })
-  //     .then((res) => res)
-  //     .catch((error) => console.log(error.message))
-
   const [
     netflixOriginals,
     trendingNow,
@@ -108,7 +98,6 @@ export const getServerSideProps = async () => {
       horrorMovies: horrorMovies.results,
       romanceMovies: romanceMovies.results,
       documentaries: documentaries.results,
-      //   products,
     },
   }
 }

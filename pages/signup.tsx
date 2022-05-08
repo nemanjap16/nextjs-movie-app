@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link'
+import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import useAuth from '../hooks/useAuth'
 
@@ -9,8 +9,8 @@ interface Inputs {
   password: string
 }
 
-function Login() {
-  const { signIn } = useAuth()
+function Signup() {
+  const { signUp } = useAuth()
 
   const {
     register,
@@ -19,8 +19,17 @@ function Login() {
     formState: { errors },
   } = useForm<Inputs>()
 
+  //   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  //     console.log(data)
+  //     if (login) {
+  //       await signUp(data.email, data.password)
+  //     } else {
+  //       await signUp(data.email, data.password)
+  //     }
+  //   }
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    await signIn(data.email, data.password)
+    await signUp(data.email, data.password)
   }
 
   return (
@@ -46,7 +55,7 @@ function Login() {
         className="relative mt-24 space-y-8 rounded bg-black/75 py-10 px-6 md:mt-0 md:max-w-md md:px-14"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h1 className="text-4xl font-semibold">Sign In</h1>
+        <h1 className="text-4xl font-semibold">Sign Up</h1>
         <div className="space-y-4">
           <label className="inline-block w-full">
             <input
@@ -83,15 +92,15 @@ function Login() {
           className="w-full rounded bg-[#E50914] py-3 font-semibold"
           type="submit"
         >
-          Sign In
+          Sign Up
         </button>
         <div className="text-[gray]">
-          New to Netflix?{' '}
+          Already have a account?{' '}
           <button
             className="cursor-pointer text-white hover:underline"
             type="submit"
           >
-            <Link href={'/signup'}>Sign up now</Link>
+            Sign in now.
           </button>
         </div>
       </form>
@@ -99,4 +108,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Signup

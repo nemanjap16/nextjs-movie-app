@@ -29,7 +29,6 @@ function Modal() {
   const [movie, setMovie] = useRecoilState(movieState)
   const [showModal, setShowModal] = useRecoilState(modalState)
   const [trailer, setTrailer] = useState('')
-  const [muted, setMuted] = useState(false)
   const [genres, setGenres] = useState<Genre[]>([])
   const [addedToList, setAddedToList] = useState(false)
   const { user } = useAuth()
@@ -150,14 +149,12 @@ function Modal() {
             height="100%"
             style={{ position: 'absolute', top: '0', left: '0' }}
             playing
-            muted={muted}
+            controls={true}
           />
-          <div className="absolute bottom-10 flex w-full items-center justify-between px-10">
-            <div className="flex space-x-2">
-              <button className="flex items-center gap-x-2 rounded bg-white px-8 text-xl font-bold text-black transition hover:bg-[#e6e6e6]">
-                <FaPlay className="h-7 w-7 text-black" />
-                Play
-              </button>
+        </div>
+        <div className="relative flex space-x-16 rounded-b-md bg-[#181818] px-10 pt-8 pb-[80px]">
+          <div className="absolute bottom-8 flex items-center px-16">
+            <div className="flex space-x-4">
               <button className="modalButton" onClick={handleList}>
                 {addedToList ? (
                   <CheckIcon className="h-7 w-7" />
@@ -169,16 +166,7 @@ function Modal() {
                 <ThumbUpIcon className="h-6 w-6" />
               </button>
             </div>
-            <button className="modalButton" onClick={() => setMuted(!muted)}>
-              {muted ? (
-                <VolumeOffIcon className="h-6 w-6" />
-              ) : (
-                <VolumeUpIcon className="h-6 w-6" />
-              )}
-            </button>
           </div>
-        </div>
-        <div className="flex space-x-16 rounded-b-md bg-[#181818] px-10 py-8">
           <div className="space-y-6 text-lg">
             <div className="flex items-center space-x-2 text-sm">
               <p className="font-semibold text-green-400">
