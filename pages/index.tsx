@@ -6,6 +6,7 @@ import Header from '../components/Header'
 import Modal from '../components/Modal'
 import Row from '../components/Row'
 import useAuth from '../hooks/useAuth'
+import useList from '../hooks/useList'
 import { Movie } from '../typings'
 import requests from '../utils/requests'
 
@@ -33,7 +34,7 @@ const Home = ({
   const { user, loading } = useAuth()
   const showModal = useRecoilValue(modalState)
   const movie = useRecoilValue(movieState)
-  // const list = useList(user?.uid)
+  const list = useList(user?.uid)
 
   if (loading) return null
 
@@ -54,6 +55,8 @@ const Home = ({
           <Row title={'Trending Now'} movies={trendingNow} />
           <Row title={'Top Rated'} movies={topRated} />
           <Row title={'Actions Movies'} movies={actionMovies} />
+          {/* My List */}
+          {list.length > 0 && <Row title="My List" movies={list} />}
           <Row title={'Horror Movies'} movies={horrorMovies} />
           <Row title={'Comedy Movies'} movies={comedyMovies} />
           <Row title={'Romance Movies'} movies={romanceMovies} />

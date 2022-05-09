@@ -2,15 +2,7 @@ import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { modalState, movieState } from '../atoms/modalAtom'
 import ReactPlayer from 'react-player/lazy'
-import { FaPlay } from 'react-icons/fa'
-import {
-  CheckIcon,
-  PlusIcon,
-  ThumbUpIcon,
-  VolumeOffIcon,
-  VolumeUpIcon,
-  XIcon,
-} from '@heroicons/react/outline'
+import { CheckIcon, PlusIcon, XIcon } from '@heroicons/react/outline'
 import { Element, Genre, Movie } from '../typings'
 import MuiModal from '@mui/material/Modal'
 import {
@@ -23,7 +15,7 @@ import {
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import useAuth from '../hooks/useAuth'
-// import toast, { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 
 function Modal() {
   const [movie, setMovie] = useRecoilState(movieState)
@@ -72,14 +64,14 @@ function Modal() {
   const handleClose = () => {
     setShowModal(false)
     setMovie(null)
-    // toast.dismiss()
+    toast.dismiss()
   }
 
   // Find all the movies in the user's list
   useEffect(() => {
     if (user) {
       return onSnapshot(
-        collection(db, 'customers', user.uid, 'myList'),
+        collection(db, 'users', user.uid, 'myList'),
         (snapshot) => setMovies(snapshot.docs)
       )
     }
@@ -97,35 +89,33 @@ function Modal() {
   const handleList = async () => {
     if (addedToList) {
       await deleteDoc(
-        doc(db, 'customers', user!.uid, 'myList', movie?.id.toString()!)
+        doc(db, 'users', user!.uid, 'myList', movie?.id.toString()!)
       )
 
-      //   toast(
-      //     `${movie?.title || movie?.original_name} has been removed from My List`,
-      //     {
-      //       duration: 8000,
-      //       style: toastStyle,
-      //     }
-      //   )
+      toast(
+        `${movie?.title || movie?.original_name} has been removed from My List`,
+        {
+          duration: 8000,
+          style: toastStyle,
+        }
+      )
     } else {
       await setDoc(
-        doc(db, 'customers', user!.uid, 'myList', movie?.id.toString()!),
+        doc(db, 'users', user!.uid, 'myList', movie?.id.toString()!),
         {
           ...movie,
         }
       )
 
-      //   toast(
-      //     `${movie?.title || movie?.original_name} has been added to My List.`,
-      //     {
-      //       duration: 8000,
-      //       style: toastStyle,
-      //     }
-      //   )
+      toast(
+        `${movie?.title || movie?.original_name} has been added to My List.`,
+        {
+          duration: 8000,
+          style: toastStyle,
+        }
+      )
     }
   }
-
-  //   console.log(addedToList)
 
   return (
     <MuiModal
@@ -134,7 +124,7 @@ function Modal() {
       className="fixed !top-7 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide"
     >
       <>
-        {/* <Toaster position="bottom-center" /> */}
+        <Toaster position="bottom-center" />
         <button
           className="modalButton absolute right-5 top-5 !z-40 h-9 w-9 border-none bg-[#181818] hover:bg-[#181818]"
           onClick={handleClose}
@@ -153,8 +143,8 @@ function Modal() {
           />
         </div>
         <div className="relative flex space-x-16 rounded-b-md bg-[#181818] px-10 pt-8 pb-[80px]">
-          <div className="absolute bottom-8 flex items-center px-16">
-            <div className="flex space-x-4">
+          <div className="absolute bottom-6 flex items-center px-16">
+            <div className="flex items-center space-x-4">
               <button className="modalButton" onClick={handleList}>
                 {addedToList ? (
                   <CheckIcon className="h-7 w-7" />
@@ -162,9 +152,11 @@ function Modal() {
                   <PlusIcon className="h-7 w-7" />
                 )}
               </button>
-              <button className="modalButton">
-                <ThumbUpIcon className="h-6 w-6" />
-              </button>
+              {addedToList ? (
+                <p>Remove from watch list</p>
+              ) : (
+                <p>Add to watch list</p>
+              )}
             </div>
           </div>
           <div className="space-y-6 text-lg">
